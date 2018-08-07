@@ -1,0 +1,309 @@
+@import '../fonts.css';
+a {
+  transition: all 0.5s ease-in-out;
+}
+body {
+  cursor: default;
+  font: 14px 'open_sansregular';
+}
+a {
+  cursor: pointer;
+}
+ul {
+  -webkit-padding-start: 0px !important;
+  -moz-padding-start: 0px !important;
+}
+.no-margin {
+  margin: 0 !important;
+  float: none !important;
+}
+.container {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+input[type=text],
+input[type=password] {
+  padding: 10px;
+  background: #fff;
+  border-radius: 4px;
+  border: 0;
+  outline: 0;
+  border: 1px solid #0054b3;
+  font: 14px 'open_sansregular';
+  color: #000;
+}
+h2 {
+  font: 16px 'open_sansregular';
+  color: #222222;
+}
+h3 {
+  font: 14px 'open_sansregular';
+  color: #222222;
+}
+.btn-orange {
+  background: #f48826;
+  border: 0;
+  border-radius: 4px;
+  font: 12px 'open_sansbold';
+  color: #fff;
+  text-transform: uppercase;
+}
+.btn-orange:hover,
+.btn-orange:focus {
+  background: #fb9539;
+}
+.logo {
+  display: block;
+  width: 140px;
+  height: 30px;
+}
+.low {
+  color: grey;
+}
+.normal {
+  color: orangered;
+}
+.hard {
+  color: red;
+}
+.column__user-exit {
+  text-decoration: underline;
+}
+.block-authorization {
+  width: 100%;
+  height: 100vh;
+  background: #004a9d;
+  overflow: hidden;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+.auth-form,
+.registr-form {
+  max-width: 400px;
+}
+.auth-form h2,
+.registr-form h2,
+.auth-form h3,
+.registr-form h3 {
+  color: #fff;
+  text-align: center;
+}
+.auth-form img,
+.registr-form img {
+  display: block;
+  margin: auto;
+  width: 140px;
+  height: 30px;
+}
+.auth-form form,
+.registr-form form {
+  margin: auto;
+  margin-bottom: 20px;
+  width: 200px;
+  height: auto;
+  display: grid;
+}
+.auth-form form input,
+.registr-form form input {
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 12px;
+}
+.auth-form form button,
+.registr-form form button {
+  padding: 10px;
+}
+.auth-form a,
+.registr-form a,
+.auth-form a:hover,
+.registr-form a:hover {
+  display: block;
+  font: 12px 'open_sansregular';
+  text-decoration: underline;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 20px;
+}
+footer {
+  padding: 10px;
+  background: #272727;
+  display: grid;
+  align-items: end;
+}
+.footer__logo {
+  margin: 0 auto;
+  width: auto;
+  height: 20px;
+}
+header {
+  width: auto;
+  padding: 10px;
+  background: #004a9d;
+}
+body {
+  background: #f4f4f4;
+}
+.title-page {
+  color: #fff;
+  font: 16px 'open_sansbold';
+}
+.block-registr {
+  width: 100%;
+  height: 100vh;
+  background: #004a9d;
+  overflow: hidden;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+.user-cols {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  grid-gap: 1em;
+}
+.user-panel {
+  margin-top: 20px;
+  padding: 20px;
+  height: auto;
+  background: #0054b3;
+  color: #fff !important;
+}
+.user-panel h1,
+.user-panel h2,
+.user-panel h3,
+.user-panel h4,
+.user-panel p,
+.user-panel a {
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+.user-panel a,
+.user-panel a:hover {
+  width: auto;
+  display: block;
+  line-height: 28px;
+  font-size: 14px;
+}
+.user-panel__title {
+  height: auto;
+  padding-bottom: 10px !important;
+  margin-bottom: 6px !important;
+  border-bottom: 1px dashed #fff;
+}
+.user-panel__user-name {
+  text-decoration: none !important;
+}
+.user-settings {
+  margin-top: 20px;
+  padding: 20px;
+  background: #fff;
+}
+.user-settings p {
+  margin: 0;
+  padding: 0;
+}
+main,
+.scrum-view {
+  padding: 20px;
+  display: grid;
+  height: auto;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1em;
+}
+.column {
+  padding: 10px;
+  background: #fff;
+}
+.column__title {
+  font: 16px 'open_sansregular';
+  color: #222222;
+  padding: 0 0 0 10px;
+  margin: 0;
+  margin-top: 4px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+ul.column__body {
+  padding: 0;
+}
+ul.column__body li {
+  list-style: none;
+}
+.column__body__task {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px dashed #f0f0f0;
+}
+.column__body__task p {
+  margin: 0;
+  padding: 0;
+  display: block;
+  font: 14px 'open_sansregular';
+  color: #222222;
+}
+.column__body__task:hover,
+.column__body__task:focus {
+  border-color: #0054b3;
+}
+.column__body__task__priority-title,
+.column__body__task__date {
+  width: auto;
+  font: 12px 'open_sansregular' !important;
+  margin-bottom: 10px;
+}
+.column__body__task__title {
+  font: 16px 'open_sansregular';
+  float: none !important;
+  width: auto !important;
+}
+/*
+LESS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: @icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+@icon-home: x y offset_x offset_y width height total_width total_height image_path name;
+
+At the bottom of this section, we provide information about the spritesheet itself
+@spritesheet: width height image @spritesheet-sprites;
+*/
+/*
+The provided classes are intended to be used with the array-like variables
+
+.icon-home {
+  .sprite-width(@icon-home);
+}
+.icon-email {
+  .sprite(@icon-email);
+}
+
+Example usage in HTML:
+
+`display: block` sprite:
+<div class="icon-home"></div>
+
+To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+
+// CSS
+.icon {
+  display: inline-block;
+}
+
+// HTML
+<i class="icon icon-home"></i>
+*/
+/*
+The `.sprites` mixin generates identical output to the CSS template
+  but can be overridden inside of LESS
+
+This must be run when you have at least 2 sprites.
+  If run with a single sprite, then there will be reference errors.
+
+.sprites(@spritesheet-sprites);
+*/
