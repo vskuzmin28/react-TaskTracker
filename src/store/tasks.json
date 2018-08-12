@@ -1,0 +1,52 @@
+{
+  "tasks": [
+    {
+      "uid": 0,
+      "priority": 0,
+      "status": 0,
+      "date": 1533982269028,
+      "taskTitle": "Test task 1",
+      "taskBody": "Test task body to do 1"
+    },
+    {
+      "uid": 1,
+      "priority": 0,
+      "status": 0,
+      "date": 1533982269028,
+      "taskTitle": "Test task 2",
+      "taskBody": "Test task body to do 2"
+    },
+    {
+      "uid": 2,
+      "priority": 0,
+      "status": 0,
+      "date": 1533982269028,
+      "taskTitle": "Test task 3",
+      "taskBody": "Test task body to do 3"
+    },
+    {
+      "uid": 3,
+      "priority": 0,
+      "status": 1,
+      "date": 1533982269028,
+      "taskTitle": "Test task 4",
+      "taskBody": "Test task body 2"
+    },
+    {
+      "uid": 4,
+      "priority": 0,
+      "status": 1,
+      "date": 1533982269028,
+      "taskTitle": "Test task 5",
+      "taskBody": "Test task body 3"
+    },
+    {
+      "uid": 5,
+      "priority": 0,
+      "status": 2,
+      "date": 1533982269028,
+      "taskTitle": "Test task 5",
+      "taskBody": "Test task body 3"
+    }
+  ]
+}

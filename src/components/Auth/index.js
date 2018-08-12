@@ -1,13 +1,16 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Auth = (props) => {
-  console.log(props)
   return (
     <div className="block-authorization">
       <div className="container">
         <div className="auth-form">
           <h2>Добро пожаловать в UI TASK TRACKER</h2>
           <h3>Введите логин/пароль для просмотра своих задач</h3>
+          {props.errMessage && <p className="auth-form__error">
+            {props.errMessage}
+          </p>}
           <form method="POST" onSubmit={props.checkCredentials}>
             <input 
               id="login" 
@@ -24,7 +27,12 @@ const Auth = (props) => {
               onChange={props.onPassEnter}
             />
             <button className="btn-orange" type="submit">Войти</button>
-          </form><a href="registration.html" title="">Зарегистрироваться</a><img src="../img/logo-white.png" alt="@@"/>
+          </form>
+          <Link to={props.linkToRegister}>
+            Зарегистрироваться
+            <img src="../img/logo-white.png" alt="@@"/>
+          </Link>
+          
         </div>
       </div>
     </div>

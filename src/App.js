@@ -1,50 +1,27 @@
 import React, { Component } from 'react'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 
+import store from './store'
+import actions from './actions'
+
 import Auth from './components/Auth'
 import Register from './components/Register'
-import Index from './components/Index'
 
-import RouteForLoggedIn from './HoC/RouteForLoggedIn'
+import Index from './containers/Index'
+import RouteForLoggedIn from './containers/RouteForLoggedIn'
 
 class App extends Component {
   constructor() {
     super()
 
-    this.state = {
-      users: [{
-        name: 'test',
-        pass: '123',
-      }],
-      loggedUserName: '',
-      isLoggedIn: false,
-    }
-
-    this.enteredName = ''
-    this.enteredPass = ''
-  }
-
-  onNameEnter = (e) => {
-    this.enteredName = e.target.value
-  }
-
-  onPassEnter = (e) => {
-    this.enteredPass = e.target.value
-  }
-
-  checkCredentials = (e) => {
-    e.preventDefault()
-
-    const isCredentialsCorrect = this.state.users.some(({name, pass}) => 
-      (name === this.enteredName) && (pass === this.enteredPass)
-    )
-
-    if (isCredentialsCorrect) {
-      this.setState({
-        loggedUserName: this.enteredName,
-        isLoggedIn: true,
-      })
-    }
+    this.state = store
+    this.actions = Object.keys(actions)
+      .reduce((acc, actionName) => {
+        return {
+          ...acc,
+          [actionName]: actions[actionName](this),
+        }
+      }, {})
   }
 
   render() {
@@ -54,16 +31,21 @@ class App extends Component {
           <RouteForLoggedIn 
             exact 
             path="/"
+            onDeleteTaskClick={this.actions.handleTaskDeletion}
             isLoggedIn={this.state.isLoggedIn}
+            headerTitle={this.state.headerTitle}
+            tasks={this.state.tasks}
             component={Index}
           />
           <Route 
             path="/auth"
             render={renderProps => {
               const props = Object.assign({}, renderProps, {
-                onNameEnter: this.onNameEnter,
-                onPassEnter: this.onPassEnter,
-                checkCredentials: this.checkCredentials,
+                onNameEnter: this.actions.onNameEnter,
+                onPassEnter: this.actions.onPassEnter,
+                checkCredentials: this.actions.checkCredentials,
+                errMessage: this.state.loginErrMessage,
+                linkToRegister: '/register',
               })
 
               return this.state.isLoggedIn
