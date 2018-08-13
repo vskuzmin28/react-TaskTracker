@@ -7,11 +7,11 @@ const Task = (props) => {
       <p className="column__body__task__priority-title">
         Приоритет:
         <span className="normal">
-          нормальный
+          {props.priority}
         </span>
       </p>
       <div className="column__body__task__date">
-        Дата: 05.08.18
+        Дата: {props.date}
       </div>
       <p className="column__body__task__title">
         {props.taskTitle}

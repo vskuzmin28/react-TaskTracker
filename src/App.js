@@ -36,6 +36,11 @@ class App extends Component {
             onTaskAddClick={this.actions.onTaskAddClick}
             onTaskAddCloseClick={this.actions.onTaskAddCloseClick}
             handleTaskTitleChange={this.actions.handleTaskTitleChange}
+            handleTaskBodyChange={this.actions.handleTaskBodyChange}
+            handleTaskStatusChange={this.actions.handleTaskStatusChange}
+            handleTaskPriorityChange={this.actions.handleTaskPriorityChange}
+            handleTaskSubmit={this.actions.handleTaskSubmit}
+        
             onLogoutClick={this.actions.onLogoutClick}
 
             fullName={this.state.loggedFullName}
@@ -67,7 +72,26 @@ class App extends Component {
                 : <Auth {...props} />
             }}
           />
-          <Route path="/register" component={Register} />
+          <Route 
+            path="/register"
+            render={renderProps => {
+              const props = Object.assign({}, renderProps, {
+                registerErrMessage: this.state.registerErrMessage,
+                onNameChange: this.actions.handleUserLoginChange,
+                onPassChange: this.actions.handleUserPassChange,
+                onEmailChange: this.actions.handleUserEmailChange,
+                onPhoneChange: this.actions.handleUserPhoneChange,
+                onFullNameChange: this.actions.handleUserfullNameChange,
+                onRegistrationSubmit: this.actions.handleUserRegistrationSubmit,
+              })
+
+              return this.state.isLoggedIn
+                ? <Redirect
+                  to={{ pathname: '/', state: { from: props.location } }}
+                />
+                : <Register {...props} />
+            }}
+          />
         </Switch>
       </BrowserRouter>
     )

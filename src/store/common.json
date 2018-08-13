@@ -7,5 +7,6 @@
   "loggedPhone": "",
   "loggedEmail": "",
   "isLoggedIn": false,
-  "loginErrMessage": ""
+  "loginErrMessage": "",
+  "registerErrMessage": ""
 }

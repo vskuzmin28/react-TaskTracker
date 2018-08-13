@@ -1,5 +1,7 @@
 import React, { Fragment } from 'react'
 
+import utils from '../../utils'
+
 import Header from '../../components/Header'
 import AddTask from '../../components/AddTask'
 import Sidebard from '../../components/Sidebar'
@@ -12,6 +14,8 @@ const Index = (props) => {
       key={task.uid}
       {...Object.assign({}, task, {
         onDeleteTaskClick: props.onDeleteTaskClick,
+        priority: utils.formatPriority(task.priority),
+        date: utils.formatDate(task.date)
       })}
     />
   )
@@ -33,6 +37,10 @@ const Index = (props) => {
       {props.isAddTaskShown &&
         <AddTask
           onTaskTitleChange={props.handleTaskTitleChange}
+          onTaskBodyChange={props.handleTaskBodyChange}
+          onTaskStatusChange={props.handleTaskStatusChange}
+          onTaskPriorityChange={props.handleTaskPriorityChange}
+          onTaskSubmit={props.handleTaskSubmit}
           onCloseClick={props.onTaskAddCloseClick}
         />
       }
