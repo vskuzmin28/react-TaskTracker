@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 
 import Header from '../../components/Header'
+import AddTask from '../../components/AddTask'
+import Sidebard from '../../components/Sidebar'
 import Task from '../../components/Task'
 import Footer from '../../components/Footer'
 
@@ -26,12 +28,26 @@ const Index = (props) => {
     .filter(({ status }) => status === 2)
     .map(task => makeTaskEntry(task))
 
-
   return (
     <Fragment>
+      {props.isAddTaskShown &&
+        <AddTask
+          onTaskTitleChange={props.handleTaskTitleChange}
+          onCloseClick={props.onTaskAddCloseClick}
+        />
+      }
       <Header headerTitle={props.headerTitle} />
+      <Sidebard
+        fullName={props.fullName}
+        phone={props.phone}
+        email={props.email}
+        viewType={props.viewType}
+        onViewTypeChange={props.handleViewTypeChange}
+        onTaskAddClick={props.onTaskAddClick}
+        onLogoutClick={props.onLogoutClick}
+      />
       <div>
-        <main className="scrum-view container">
+        <main className={`container ${props.viewType}`}>
           <div className="column func-plan">
             <h4 className="column__title">План</h4>
             <ul className="column__body">

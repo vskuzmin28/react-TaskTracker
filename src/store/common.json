@@ -1,6 +1,11 @@
 {
   "headerTitle": "UI TaskTracker",
+  "viewType": "brief-view",
+  "isAddTaskShown": false,
   "loggedUserName": "",
+  "loggedFullName": "",
+  "loggedPhone": "",
+  "loggedEmail": "",
   "isLoggedIn": false,
   "loginErrMessage": ""
 }

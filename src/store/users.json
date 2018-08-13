@@ -2,7 +2,10 @@
   "users": [
     {
         "name": "test",
-        "pass": "123"
+        "pass": "123",
+        "fullName": "Кузьмин Виталик Сергеевич",
+        "phone": "8 917 827 9291",
+        "email": "vskuzmin28@gmail.com"
     }
   ]
 }

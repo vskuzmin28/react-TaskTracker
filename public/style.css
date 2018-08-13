@@ -73,16 +73,18 @@ h3 {
   display: none;
 }
 .modal__detail-task {
-  display: none !important;
+  /* display: none !important; */
 }
 .modal__edit-task {
-  display: none !important;
+  /* display: none !important; */
 }
 .modal__add-task {
-  display: none !important;
+  /* display: none !important; */
 }
 .modal-bg.modal__add-task {
-  position: absolute;
+  position: fixed;
+  top: 0px;
+  left: 0px;
   display: grid;
   justify-items: center;
   align-items: center;

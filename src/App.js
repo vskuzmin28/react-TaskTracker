@@ -32,8 +32,20 @@ class App extends Component {
             exact 
             path="/"
             onDeleteTaskClick={this.actions.handleTaskDeletion}
+            handleViewTypeChange={this.actions.handleViewTypeChange}
+            onTaskAddClick={this.actions.onTaskAddClick}
+            onTaskAddCloseClick={this.actions.onTaskAddCloseClick}
+            handleTaskTitleChange={this.actions.handleTaskTitleChange}
+            onLogoutClick={this.actions.onLogoutClick}
+
+            fullName={this.state.loggedFullName}
+            phone={this.state.loggedPhone}
+            email={this.state.loggedEmail}
+
+            isAddTaskShown={this.state.isAddTaskShown}
             isLoggedIn={this.state.isLoggedIn}
             headerTitle={this.state.headerTitle}
+            viewType={this.state.viewType}
             tasks={this.state.tasks}
             component={Index}
           />

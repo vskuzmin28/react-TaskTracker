@@ -32,10 +32,27 @@ const checkCredentials = ctx =>
     )
 
     if (isCredentialsCorrect) {
+      const {
+        name,
+        fullName,
+        phone,
+        email,
+      } = ctx.state.users.find(({ name, pass }) =>
+        (name === enteredCredentials.get('enteredName'))
+        && (pass === enteredCredentials.get('enteredPass'))
+      )
+
       ctx.setState({
-        loggedUserName: enteredCredentials.get('enteredName'),
+        loggedUserName: name,
+        loggedFullName: fullName,
+        loggedPhone: phone,
+        loggedEmail: email,
         isLoggedIn: true,
       })
+
+      enteredCredentials.set('enteredName', '')
+      enteredCredentials.set('enteredPass', '')
+
     } else {
       ctx.setState({
         loginErrMessage: 'Неверно ввведен пароль или такого пользователя не существует',
@@ -43,8 +60,22 @@ const checkCredentials = ctx =>
     }
   }
 
+const onLogoutClick = ctx =>
+  (e) => {
+    e.preventDefault()
+
+    ctx.setState({
+      loggedUserName: '',
+      isLoggedIn: false,
+      loggedFullName: '',
+      loggedPhone: '',
+      loggedEmail: '',
+    })
+  }
+
 export default {
   onNameEnter,
   onPassEnter,
   checkCredentials,
+  onLogoutClick,
 }
