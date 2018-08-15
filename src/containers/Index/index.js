@@ -4,6 +4,7 @@ import utils from '../../utils'
 
 import Header from '../../components/Header'
 import AddTask from '../../components/AddTask'
+import EditTask from '../../components/EditTask'
 import Sidebard from '../../components/Sidebar'
 import Task from '../../components/Task'
 import Footer from '../../components/Footer'
@@ -13,6 +14,7 @@ const Index = (props) => {
     <Task
       key={task.uid}
       {...Object.assign({}, task, {
+        onTaskEditClick: props.onTaskEditClick,
         onDeleteTaskClick: props.onDeleteTaskClick,
         priority: utils.formatPriority(task.priority),
         date: utils.formatDate(task.date)
@@ -41,7 +43,21 @@ const Index = (props) => {
           onTaskStatusChange={props.handleTaskStatusChange}
           onTaskPriorityChange={props.handleTaskPriorityChange}
           onTaskSubmit={props.handleTaskSubmit}
-          onCloseClick={props.onTaskAddCloseClick}
+          onCloseClick={props.onTaskCloseClick}
+        />
+      }
+      {props.isEditTaskShown &&
+        <EditTask
+          editTaskPriority={props.editTaskPriority}
+          editTaskStatus={props.editTaskStatus}
+          editTaskTitle={props.editTaskTitle}
+          editTaskBody={props.editTaskBody}
+          onTaskTitleChange={props.handleTaskTitleChange}
+          onTaskBodyChange={props.handleTaskBodyChange}
+          onTaskStatusChange={props.handleTaskStatusChange}
+          onTaskPriorityChange={props.handleTaskPriorityChange}
+          onTaskSubmit={props.handleTaskSubmitAfterEdition}
+          onCloseClick={props.onTaskCloseClick}
         />
       }
       <Header headerTitle={props.headerTitle} />

@@ -1,7 +1,6 @@
 import React from 'react'
 
 const AddTask = (props) => {
-  console.log(props)
   return (
     <div className="modal-bg modal__add-task">
       <div className="modal">

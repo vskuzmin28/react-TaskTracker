@@ -31,15 +31,23 @@ class App extends Component {
           <RouteForLoggedIn 
             exact 
             path="/"
-            onDeleteTaskClick={this.actions.handleTaskDeletion}
             handleViewTypeChange={this.actions.handleViewTypeChange}
             onTaskAddClick={this.actions.onTaskAddClick}
-            onTaskAddCloseClick={this.actions.onTaskAddCloseClick}
+            onTaskEditClick={this.actions.onTaskEditClick}
+            onTaskCloseClick={this.actions.onTaskCloseClick}
+            onDeleteTaskClick={this.actions.handleTaskDeletion}
+
+            editTaskPriority={this.state.editTaskPriority}
+            editTaskStatus={this.state.editTaskStatus}
+            editTaskTitle={this.state.editTaskTitle}
+            editTaskBody={this.state.editTaskBody}
+
             handleTaskTitleChange={this.actions.handleTaskTitleChange}
             handleTaskBodyChange={this.actions.handleTaskBodyChange}
             handleTaskStatusChange={this.actions.handleTaskStatusChange}
             handleTaskPriorityChange={this.actions.handleTaskPriorityChange}
             handleTaskSubmit={this.actions.handleTaskSubmit}
+            handleTaskSubmitAfterEdition={this.actions.handleTaskSubmitAfterEdition}
         
             onLogoutClick={this.actions.onLogoutClick}
 
@@ -48,6 +56,7 @@ class App extends Component {
             email={this.state.loggedEmail}
 
             isAddTaskShown={this.state.isAddTaskShown}
+            isEditTaskShown={this.state.isEditTaskShown}
             isLoggedIn={this.state.isLoggedIn}
             headerTitle={this.state.headerTitle}
             viewType={this.state.viewType}

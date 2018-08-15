@@ -2,6 +2,14 @@
   "headerTitle": "UI TaskTracker",
   "viewType": "brief-view",
   "isAddTaskShown": false,
+  "isEditTaskShown": false,
+
+  "editTaskUid": -1,
+  "editTaskPriority": 0,
+  "editTaskStatus": 0,
+  "editTaskTitle": "",
+  "editTaskBody": "",
+  
   "loggedUserName": "",
   "loggedFullName": "",
   "loggedPhone": "",

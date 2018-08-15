@@ -31,12 +31,13 @@ const onTaskAddClick = ctx =>
     })
   }
 
-const onTaskAddCloseClick = ctx =>
+const onTaskCloseClick = ctx =>
   (e) => {
     e.preventDefault()
 
     ctx.setState({
       isAddTaskShown: false,
+      isEditTaskShown: false,
     })
   }
 
@@ -49,25 +50,21 @@ const clearTaskData = () => {
 const handleTaskTitleChange = ctx =>
   (e) => {
     taskData.set('taskTitle', e.target.value)
-    console.log(taskData)
   }
 
 const handleTaskBodyChange = ctx =>
   (e) => {
     taskData.set('taskBody', e.target.value)
-    console.log(taskData)
   }
 
 const handleTaskStatusChange = ctx =>
   (e) => {
     taskData.set('taskStatus', e.target.value)
-    console.log(taskData)
   }
 
 const handleTaskPriorityChange = ctx =>
   (e) => {
     taskData.set('taskPriority', e.target.value)
-    console.log(taskData)
   }
 
 const handleTaskSubmit = ctx =>
@@ -112,6 +109,91 @@ const handleTaskSubmit = ctx =>
     })
   }
 
+const handleTaskSubmitAfterEdition = ctx =>
+  (e) => {
+    e.preventDefault()
+
+    const {
+      tasks,
+      editTaskUid,
+      editTaskPriority,
+      editTaskStatus,
+      editTaskTitle,
+      editTaskBody,
+    } = ctx.state
+
+    if (!editTaskTitle && (taskData.get('taskTitle').length < 3)) {
+      return 'слишком короткое название для задачи'
+    }
+
+    if (!editTaskBody && (taskData.get('taskBody').length < 3)) {
+      return 'слишком короткое описание заддачи'
+    }
+
+    const status = Number.parseInt(taskData.get('taskStatus'), 10)
+    const priority = Number.parseInt(taskData.get('taskPriority'), 10)
+
+    if (!editTaskStatus && ((status < 0) || (status > 2))) {
+      return 'ожидался статус задачи от 0 до 2'
+    }
+
+    if (!editTaskPriority && ((priority < 0) || (priority > 2))) {
+      return 'ожидался приоритет задачи от 0 до 2'
+    }
+
+    const restTasks = tasks.filter(({ uid }) => uid !== editTaskUid)
+
+    const newTask = {
+      "uid": utils.uuidGenerator(),
+      "priority": Number.isNaN(priority) ? editTaskPriority : priority,
+      "status": Number.isNaN(status) ? editTaskStatus : status,
+      "date": Date.now(),
+      "taskTitle": taskData.get('taskTitle') ? taskData.get('taskTitle') : editTaskTitle,
+      "taskBody": taskData.get('taskBody') ? taskData.get('taskBody') : editTaskBody
+    }
+
+    clearTaskData()
+
+    ctx.setState({
+      tasks: [newTask, ...restTasks],
+      isEditTaskShown: false,
+      editTaskPriority: 0,
+      editTaskStatus: 0,
+      editTaskTitle: '',
+      editTaskBody: '',
+    })
+  }
+
+const onTaskEditClick = ctx =>
+  (e, taskId) => {
+    e.preventDefault()
+
+    const { tasks } = ctx.state
+    const task = tasks.find(({ uid }) => uid === taskId)
+
+    if (!task) {
+      return 'Не найден таск с заданным ид'
+    }
+
+    const {
+      uid,
+      priority,
+      status,
+      date,
+      taskTitle,
+      taskBody,
+    } = task
+
+    ctx.setState({
+      editTaskUid: uid,
+      editTaskPriority: priority,
+      editTaskStatus: status,
+      editTaskTitle: taskTitle,
+      editTaskBody: taskBody,
+      isEditTaskShown: true,
+    })
+  }
+
 export default {
   handleTaskDeletion,
   handleViewTypeChange,
@@ -120,6 +202,8 @@ export default {
   handleTaskStatusChange,
   handleTaskPriorityChange,
   handleTaskSubmit,
+  handleTaskSubmitAfterEdition,
   onTaskAddClick,
-  onTaskAddCloseClick,
+  onTaskEditClick,
+  onTaskCloseClick,
 }

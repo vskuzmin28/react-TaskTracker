@@ -20,7 +20,13 @@ const Task = (props) => {
         {props.taskBody}
       </p>
       <ul>
-        <li><a href="#" title="">Изменить</a></li>
+        <li><a 
+          href="#" 
+          title=""
+          onClick={(e) => props.onTaskEditClick(e, props.uid)}
+        >
+          Изменить
+        </a></li>
         <li>
           <a
             href="#"
