@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
 
 import utils from '../../utils'
 
@@ -10,29 +11,38 @@ import Task from '../../components/Task'
 import Footer from '../../components/Footer'
 
 const Index = (props) => {
-  const makeTaskEntry = task => (
+  const SortableItem = SortableElement(({ value }) =>
     <Task
-      key={task.uid}
-      {...Object.assign({}, task, {
+      {...Object.assign({}, value, {
         onTaskEditClick: props.onTaskEditClick,
         onDeleteTaskClick: props.onDeleteTaskClick,
-        priority: utils.formatPriority(task.priority),
-        date: utils.formatDate(task.date)
+        priority: utils.formatPriority(value.priority),
+        date: utils.formatDate(value.date)
       })}
     />
   )
 
-  const plannedTasks = props.tasks
-    .filter(({status}) => status === 0)
-    .map(task => makeTaskEntry(task))
+  const makeSortableList = statusIndex =>
+    SortableContainer(({ items }) => {
+      return (
+        <ul className="column__body">
+          {items
+            .filter(({ status }) => status === statusIndex)
+            .map((task, index) => <SortableItem
+              key={task.uid}
+              index={index}
+              value={task}
+            />)
+          }
+        </ul>
+      )
+    })
 
-  const doingTasks = props.tasks
-    .filter(({ status }) => status === 1)
-    .map(task => makeTaskEntry(task))
+  const SortableListOfPlannedTasks = makeSortableList(0)
 
-  const doneTasks = props.tasks
-    .filter(({ status }) => status === 2)
-    .map(task => makeTaskEntry(task))
+  const SortableListOfDoingTasks = makeSortableList(1)
+
+  const SortableListOfDoneTasks = makeSortableList(2)
 
   return (
     <Fragment>
@@ -74,21 +84,15 @@ const Index = (props) => {
         <main className={`container ${props.viewType}`}>
           <div className="column func-plan">
             <h4 className="column__title">План</h4>
-            <ul className="column__body">
-              {plannedTasks}
-            </ul>
+            <SortableListOfPlannedTasks items={props.tasks} axis="xy" />
           </div>
           <div className="column func-process">
             <h4 className="column__title">В процессе</h4>
-            <ul className="column__body">
-              {doingTasks}
-            </ul>
+            <SortableListOfDoingTasks items={props.tasks} axis="xy" />
           </div>
           <div className="column func-done">
             <h4 className="column__title">Готово</h4>
-            <ul className="column__body">
-              {doneTasks}
-            </ul>
+            <SortableListOfDoneTasks items={props.tasks} axis="xy" />
           </div>
         </main>
       </div>
