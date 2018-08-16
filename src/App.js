@@ -49,6 +49,7 @@ class App extends Component {
             handleTaskSubmit={this.actions.handleTaskSubmit}
             handleTaskSubmitAfterEdition={this.actions.handleTaskSubmitAfterEdition}
         
+            onTaskDragEnd={this.actions.onTaskDragEnd}
             onLogoutClick={this.actions.onLogoutClick}
 
             fullName={this.state.loggedFullName}

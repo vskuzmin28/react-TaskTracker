@@ -44,6 +44,52 @@ const Index = (props) => {
 
   const SortableListOfDoneTasks = makeSortableList(2)
 
+  const SortableContainerCommon = SortableContainer(({ items }) => {
+    return (
+      <main className={`container ${props.viewType}`}>
+        <div className="column func-plan">
+          <h4 className="column__title">План</h4>
+          <ul className="column__body">
+            {items
+              .filter(({ status }) => status === 0)
+              .map((task, index) => <SortableItem
+                key={task.uid}
+                index={index}
+                value={task}
+              />)
+            }
+          </ul>
+        </div>
+        <div className="column func-process">
+          <h4 className="column__title">В процессе</h4>
+          <ul className="column__body">
+            {items
+              .filter(({ status }) => status === 1)
+              .map((task, index) => <SortableItem
+                key={task.uid}
+                index={index}
+                value={task}
+              />)
+            }
+          </ul>
+        </div>
+        <div className="column func-done">
+          <h4 className="column__title">Готово</h4>
+          <ul className="column__body">
+            {items
+              .filter(({ status }) => status === 2)
+              .map((task, index) => <SortableItem
+                key={task.uid}
+                index={index}
+                value={task}
+              />)
+            }
+          </ul>
+        </div>
+      </main>
+    )
+  })
+
   return (
     <Fragment>
       {props.isAddTaskShown &&
@@ -84,15 +130,15 @@ const Index = (props) => {
         <main className={`container ${props.viewType}`}>
           <div className="column func-plan">
             <h4 className="column__title">План</h4>
-            <SortableListOfPlannedTasks items={props.tasks} axis="xy" />
+            <SortableListOfPlannedTasks items={props.tasks} axis="xy" onSortEnd={props.onTaskDragEnd} />
           </div>
           <div className="column func-process">
             <h4 className="column__title">В процессе</h4>
-            <SortableListOfDoingTasks items={props.tasks} axis="xy" />
+            <SortableListOfDoingTasks items={props.tasks} axis="xy" onSortEnd={props.onTaskDragEnd} />
           </div>
           <div className="column func-done">
             <h4 className="column__title">Готово</h4>
-            <SortableListOfDoneTasks items={props.tasks} axis="xy" />
+            <SortableListOfDoneTasks items={props.tasks} axis="xy" onSortEnd={props.onTaskDragEnd} />
           </div>
         </main>
       </div>

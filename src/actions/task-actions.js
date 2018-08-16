@@ -1,4 +1,5 @@
 import utils from '../utils'
+import { arrayMove } from 'react-sortable-hoc'
 
 const handleTaskDeletion = ctx =>
   (e, taskId) => {
@@ -194,6 +195,15 @@ const onTaskEditClick = ctx =>
     })
   }
 
+const onTaskDragEnd = ctx =>
+  (props) => {
+    const { tasks } = ctx.state
+    console.log(props)
+    ctx.setState({
+      tasks: arrayMove(tasks, props.oldIndex, props.newIndex)
+    })
+  }
+
 export default {
   handleTaskDeletion,
   handleViewTypeChange,
@@ -206,4 +216,5 @@ export default {
   onTaskAddClick,
   onTaskEditClick,
   onTaskCloseClick,
+  onTaskDragEnd,
 }
