@@ -93,6 +93,7 @@ class App extends Component {
                 onPhoneChange: this.actions.handleUserPhoneChange,
                 onFullNameChange: this.actions.handleUserfullNameChange,
                 onRegistrationSubmit: this.actions.handleUserRegistrationSubmit,
+                linkToAuth: '/auth',
               })
 
               return this.state.isLoggedIn

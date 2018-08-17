@@ -194,13 +194,46 @@ const onTaskEditClick = ctx =>
     })
   }
 
+const moveInArray = (arr, from, to) => {
+  arr.splice(to, 0, arr.splice(from, 1)[0])
+}
+
 const onTaskDragEnd = ctx =>
-  (props) => {
-    /* const { tasks } = ctx.state
-    console.log(props)
+  (cardId, sourceLaneId, targetLaneId, position, cardDetails) => {
+    const { tasks } = ctx.state
+
+    const filteredTasks = tasks.filter(({ status }) => status === Number.parseInt(targetLaneId, 10))
+
+    /* const realPos = (position === filteredTasks.length) || (position === filteredTasks.length - 1)
+      ? position === filteredTasks.length
+          ? tasks.findIndex(({ uid }) => uid === filteredTasks[filteredTasks.length - 1].uid)
+          : tasks.findIndex(({ uid }) => uid === filteredTasks[filteredTasks.length - 1].uid) + 1
+      : tasks.findIndex(({ uid }) => uid === filteredTasks[position].uid) */
+
+    let realPos = 0
+
+    if ((filteredTasks.length === 1) && (position > 0)) {
+      realPos = tasks.length - 1
+    } else if ((filteredTasks.length > 0) && (position === filteredTasks.length)) {
+      realPos = tasks.length - 1
+    } else if ((filteredTasks.length > 1) && (position < filteredTasks.length)) {
+      if (position === 0) {
+        realPos = tasks.findIndex(({ uid }) => uid === filteredTasks[position].uid)
+      } else {
+        realPos = tasks.findIndex(({ uid }) => uid === filteredTasks[position].uid)
+      }
+    }
+
+
+    const indexOfChangedCard = tasks.findIndex(({ uid }) => uid === cardDetails.uid)
+    tasks[indexOfChangedCard].status = Number.parseInt(targetLaneId, 10)
+
+    
+    moveInArray(tasks, indexOfChangedCard, realPos)
+
     ctx.setState({
-      tasks: arrayMove(tasks, props.oldIndex, props.newIndex)
-    }) */
+      tasks: tasks
+    })
   }
 
 export default {

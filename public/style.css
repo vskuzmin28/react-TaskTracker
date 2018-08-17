@@ -194,7 +194,7 @@ h3 {
   text-align: center;
 }
 .modal-bg {
-  position: absolute;
+  position: fixed;
   display: grid;
   justify-items: center;
   align-items: center;
@@ -229,7 +229,7 @@ h3 {
   margin-top: 20px;
 }
 .modal-bg.modal__edit-task {
-  position: absolute;
+  position: fixed;
   display: grid;
   justify-items: center;
   align-items: center;

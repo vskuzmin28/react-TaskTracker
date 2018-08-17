@@ -11,17 +11,6 @@ import Task from '../../components/Task'
 import Footer from '../../components/Footer'
 
 const Index = (props) => {
-  const makeTask = (task) =>
-    (<Task
-        key={task.uid}
-        {...Object.assign({}, task, {
-          onTaskEditClick: props.onTaskEditClick,
-          onDeleteTaskClick: props.onDeleteTaskClick,
-          priority: utils.formatPriority(task.priority),
-          date: utils.formatDate(task.date)
-        })}
-    />)
-
   const makeTaskForBoard = additionalProps =>
     (task) =>
       (<Task
@@ -39,7 +28,7 @@ const Index = (props) => {
   const taskFilter = statusFilter =>
     props.tasks
       .filter(({ status }) => status === statusFilter)
-      .map(makeTask)
+      .map(TaskForBoard)
 
   const todoTasks = taskFilter(0)
 
@@ -50,23 +39,24 @@ const Index = (props) => {
   const makeCardForBoard = statusFilter =>
     props.tasks
       .filter(({ status }) => status === statusFilter)
+      .map(task => (task.id = String(task.uid), task))
 
   const boardData = {
     lanes: [
       {
-        id: 'lane1',
+        id: '0',
         title: 'Планируемые задачи',
         label: '1/3',
         cards: makeCardForBoard(0)
       },
       {
-        id: 'lane2',
+        id: '1',
         title: 'Задачи в работе',
         label: '2/3',
         cards: makeCardForBoard(1)
       },
       {
-        id: 'lane3',
+        id: '2',
         title: 'Законченные задачи',
         label: '3/3',
         cards: makeCardForBoard(2)
@@ -139,7 +129,11 @@ const Index = (props) => {
         {props.viewType.includes('scrum')
           ? (<main className={`container ${props.viewType}`}>
               <div className="column func-plan">
-                <Board draggable customCardLayout data={boardData}>
+                <Board 
+                  draggable
+                  customCardLayout
+                  handleDragEnd={props.onTaskDragEnd}
+                  data={boardData}>
                   <TaskForBoard />
                 </Board>
               </div>

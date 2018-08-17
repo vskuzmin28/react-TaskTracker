@@ -1,3 +1,11 @@
+import { validate }  from 'validate.js'
+
+const constraints = {
+  email: {
+    email: true,
+  },
+}
+
 const newUserData = new Map()
 
 const clearUserData = () => {
@@ -9,7 +17,7 @@ const errMessageCleanup = (ctx) => {
 
   if (registerErrMessage) {
     ctx.setState({
-      registerErrMessage: false,
+      registerErrMessage: '',
     })
   }
 
@@ -45,8 +53,24 @@ const handleUserfullNameChange = ctx =>
     errMessageCleanup(ctx)
   }
 
-const handleUserRegistrationSubmit = ctx =>
-  (e) => {
+const setErrorMessage = (ctx, msg) => {
+  ctx.setState({
+    registerErrMessage: msg,
+  })
+}
+
+const createUserPack = userSet => {
+  userSet.set('userName', '')
+  userSet.set('userPass', '')
+  userSet.set('userEmail', '')
+  userSet.set('userPhone', '')
+  userSet.set('userFullname', '')
+}
+
+const handleUserRegistrationSubmit = ctx => {
+  createUserPack(newUserData)
+
+  return (e) => {
     e.preventDefault()
 
     const { users } = ctx.state
@@ -69,11 +93,17 @@ const handleUserRegistrationSubmit = ctx =>
       })
     }
 
-    /* if (newUserData.get('userEmail').length < 3) {
+    if ((newUserData.get('userEmail').length < 3)) {
       return ctx.setState({
-        registerErrMessage: 'слишком короткий пароль',
+        registerErrMessage: 'слишком короткий имейл',
       })
-    } */
+    }
+
+    if (validate({ email: newUserData.get('userEmail') }, constraints)) {
+      return ctx.setState({
+        registerErrMessage: validate({ email: newUserData.get('userEmail') }, constraints).email,
+      })
+    }
 
     /* if (newUserData.get('userPass').length < 3) {
       return ctx.setState({
@@ -107,6 +137,8 @@ const handleUserRegistrationSubmit = ctx =>
       isLoggedIn: true,
     })
   }
+}
+
 
 export default {
   handleUserLoginChange,
