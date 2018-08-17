@@ -30,8 +30,8 @@ const Auth = (props) => {
           </form>
           <Link to={props.linkToRegister}>
             Зарегистрироваться
-            <img src="../img/logo-white.png" alt="@@"/>
           </Link>
+          <img src="../img/logo-white.png" alt="@@" />
           
         </div>
       </div>

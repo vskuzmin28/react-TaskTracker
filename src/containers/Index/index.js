@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { SortableContainer, SortableElement, arrayMove } from 'react-sortable-hoc'
+import Board from 'react-trello'
 
 import utils from '../../utils'
 
@@ -11,84 +11,93 @@ import Task from '../../components/Task'
 import Footer from '../../components/Footer'
 
 const Index = (props) => {
-  const SortableItem = SortableElement(({ value }) =>
-    <Task
-      {...Object.assign({}, value, {
-        onTaskEditClick: props.onTaskEditClick,
-        onDeleteTaskClick: props.onDeleteTaskClick,
-        priority: utils.formatPriority(value.priority),
-        date: utils.formatDate(value.date)
-      })}
-    />
-  )
+  const makeTask = (task) =>
+    (<Task
+        key={task.uid}
+        {...Object.assign({}, task, {
+          onTaskEditClick: props.onTaskEditClick,
+          onDeleteTaskClick: props.onDeleteTaskClick,
+          priority: utils.formatPriority(task.priority),
+          date: utils.formatDate(task.date)
+        })}
+    />)
 
-  const makeSortableList = statusIndex =>
-    SortableContainer(({ items }) => {
-      return (
-        <ul className="column__body">
-          {items
-            .filter(({ status }) => status === statusIndex)
-            .map((task, index) => <SortableItem
-              key={task.uid}
-              index={index}
-              value={task}
-            />)
-          }
-        </ul>
-      )
-    })
+  const makeTaskForBoard = additionalProps =>
+    (task) =>
+      (<Task
+        key={task.uid}
+        {...Object.assign({}, task, {
+          priority: utils.formatPriority(task.priority),
+          date: utils.formatDate(task.date)}, additionalProps)}
+      />)
 
-  const SortableListOfPlannedTasks = makeSortableList(0)
+  const TaskForBoard = makeTaskForBoard({
+    onTaskEditClick: props.onTaskEditClick,
+    onDeleteTaskClick: props.onDeleteTaskClick,
+  })
 
-  const SortableListOfDoingTasks = makeSortableList(1)
+  const taskFilter = statusFilter =>
+    props.tasks
+      .filter(({ status }) => status === statusFilter)
+      .map(makeTask)
 
-  const SortableListOfDoneTasks = makeSortableList(2)
+  const todoTasks = taskFilter(0)
 
-  const SortableContainerCommon = SortableContainer(({ items }) => {
+  const doingTasks = taskFilter(1)
+
+  const doneTasks = taskFilter(2)
+
+  const makeCardForBoard = statusFilter =>
+    props.tasks
+      .filter(({ status }) => status === statusFilter)
+
+  const boardData = {
+    lanes: [
+      {
+        id: 'lane1',
+        title: 'Планируемые задачи',
+        label: '1/3',
+        cards: makeCardForBoard(0)
+      },
+      {
+        id: 'lane2',
+        title: 'Задачи в работе',
+        label: '2/3',
+        cards: makeCardForBoard(1)
+      },
+      {
+        id: 'lane3',
+        title: 'Законченные задачи',
+        label: '3/3',
+        cards: makeCardForBoard(2)
+      },
+    ]
+  }
+
+  const tasksContainerCommon = (tasks) => {
     return (
       <main className={`container ${props.viewType}`}>
         <div className="column func-plan">
           <h4 className="column__title">План</h4>
           <ul className="column__body">
-            {items
-              .filter(({ status }) => status === 0)
-              .map((task, index) => <SortableItem
-                key={task.uid}
-                index={index}
-                value={task}
-              />)
-            }
+            {todoTasks}
           </ul>
         </div>
         <div className="column func-process">
           <h4 className="column__title">В процессе</h4>
           <ul className="column__body">
-            {items
-              .filter(({ status }) => status === 1)
-              .map((task, index) => <SortableItem
-                key={task.uid}
-                index={index}
-                value={task}
-              />)
-            }
+            {doingTasks}
           </ul>
         </div>
         <div className="column func-done">
           <h4 className="column__title">Готово</h4>
           <ul className="column__body">
-            {items
-              .filter(({ status }) => status === 2)
-              .map((task, index) => <SortableItem
-                key={task.uid}
-                index={index}
-                value={task}
-              />)
-            }
+            {doneTasks}
           </ul>
         </div>
       </main>
     )
-  })
+  }
 
   return (
     <Fragment>
@@ -127,20 +136,16 @@ const Index = (props) => {
         onLogoutClick={props.onLogoutClick}
       />
       <div>
-        <main className={`container ${props.viewType}`}>
-          <div className="column func-plan">
-            <h4 className="column__title">План</h4>
-            <SortableListOfPlannedTasks items={props.tasks} axis="xy" onSortEnd={props.onTaskDragEnd} />
-          </div>
-          <div className="column func-process">
-            <h4 className="column__title">В процессе</h4>
-            <SortableListOfDoingTasks items={props.tasks} axis="xy" onSortEnd={props.onTaskDragEnd} />
-          </div>
-          <div className="column func-done">
-            <h4 className="column__title">Готово</h4>
-            <SortableListOfDoneTasks items={props.tasks} axis="xy" onSortEnd={props.onTaskDragEnd} />
-          </div>
-        </main>
+        {props.viewType.includes('scrum')
+          ? (<main className={`container ${props.viewType}`}>
+              <div className="column func-plan">
+                <Board draggable customCardLayout data={boardData}>
+                  <TaskForBoard />
+                </Board>
+              </div>
+            </main>)
+          : tasksContainerCommon(props.tasks)
+        }
       </div>
       <Footer />
     </Fragment>
